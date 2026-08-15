@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://5uaxs44187su" path="res://Assets/elias-all-idle-32x32.png" id="2_ij6vw"]
 [ext_resource type="Texture2D" uid="uid://q4vkqt2s3y1s" path="res://Assets/elias-run-down-32x32.png" id="3_ghijl"]
 [ext_resource type="Texture2D" uid="uid://cvg82571lc7xe" path="res://Assets/elias-run-right-32x32.png" id="4_44cfe"]
+[ext_resource type="Texture2D" uid="uid://b6laedd0hfvuw" path="res://Assets/elias-run-up-32x32.png" id="5_dd465"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ghijl"]
 atlas = ExtResource("2_ij6vw")
@@ -85,6 +86,22 @@ region = Rect2(0, 64, 32, 32)
 atlas = ExtResource("4_44cfe")
 region = Rect2(0, 96, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_skrk8"]
+atlas = ExtResource("5_dd465")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye16i"]
+atlas = ExtResource("5_dd465")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75u2t"]
+atlas = ExtResource("5_dd465")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qa1u"]
+atlas = ExtResource("5_dd465")
+region = Rect2(96, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_qp52p"]
 resource_local_to_scene = true
 animations = [{
@@ -154,7 +171,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_down",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -172,21 +189,39 @@ animations = [{
 "loop": true,
 "name": &"run_right",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skrk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye16i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75u2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qa1u")
+}],
+"loop": true,
+"name": &"run_up",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_44cfe"]
-radius = 28.0
-height = 86.0
+radius = 21.0
+height = 72.0
 
 [node name="Player" type="CharacterBody2D" unique_id=165030233]
-position = Vector2(93, 29)
+position = Vector2(133, 6)
 script = ExtResource("1_ij6vw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=635726408]
 position = Vector2(-133, -10)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_qp52p")
-animation = &"run_down"
+animation = &"run_up"
+frame_progress = 0.007316661
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1073697160]
 scale = Vector2(1e-05, 1e-05)
@@ -194,5 +229,5 @@ limit_enabled = false
 position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1983116780]
-position = Vector2(-134, 0)
+position = Vector2(-134, 5)
 shape = SubResource("CapsuleShape2D_44cfe")

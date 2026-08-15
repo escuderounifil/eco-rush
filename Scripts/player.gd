@@ -7,7 +7,7 @@ const ACCEL = 2.0
 var last_direction: Vector2 = Vector2.RIGHT
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	process_movement()
 	move_and_slide()
 	
