@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://i8chx2bcawdd"]
+
+[ext_resource type="Texture2D" uid="uid://5uaxs44187su" path="res://Assets/elias-all-idle-32x32.png" id="1_keijr"]
+[ext_resource type="Script" uid="uid://dd4jli1yegsof" path="res://Scripts/dialogo_velho.gd" id="1_ubt4b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubt4b"]
+atlas = ExtResource("1_keijr")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30og4"]
+atlas = ExtResource("1_keijr")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usqx3"]
+atlas = ExtResource("1_keijr")
+region = Rect2(64, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxr4f"]
+atlas = ExtResource("1_keijr")
+region = Rect2(96, 0, 32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vv0sb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubt4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30og4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usqx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxr4f")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubt4b"]
+radius = 33.0
+height = 90.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xxh1y"]
+bg_color = Color(0.043137256, 0.043137256, 0.043137256, 0.3764706)
+
+[sub_resource type="FontFile" id="FontFile_r3g48"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_bdvv3"]
+font = SubResource("FontFile_r3g48")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ex0d1"]
+font_size = 12
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 0.85882354)
+
+[node name="NPCVelho" type="Area2D" unique_id=975491481]
+script = ExtResource("1_ubt4b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=795392747]
+position = Vector2(883, 132)
+scale = Vector2(3.125, 2.95)
+sprite_frames = SubResource("SpriteFrames_vv0sb")
+animation = &"new_animation"
+frame_progress = 0.46507394
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=124263887]
+position = Vector2(883, 130)
+shape = SubResource("CapsuleShape2D_ubt4b")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1140422025]
+
+[node name="CaixaDialogo" type="Label" parent="CanvasLayer" unique_id=738094769]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -130.0
+offset_right = 192.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_xxh1y")
+label_settings = SubResource("LabelSettings_bdvv3")
+autowrap_mode = 2
+
+[node name="TextoDialogo" type="Label" parent="CanvasLayer" unique_id=398576120]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -186.99997
+offset_top = -125.0
+offset_right = 177.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+rotation = 0.0021376924
+theme_override_font_sizes/font_size = 16
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="CanvasLayer" unique_id=1063962517]
+
+[node name="LabelInteragir" type="Label" parent="." unique_id=310852441]
+offset_left = 840.0
+offset_top = 58.0
+offset_right = 927.0
+offset_bottom = 89.0
+label_settings = SubResource("LabelSettings_ex0d1")
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
