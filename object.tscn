@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://crv1lty32q806"]
+
+[ext_resource type="Texture2D" uid="uid://cggopgi5hws6v" path="res://Craftland/Terrain/CL_MainLev.png" id="1_7uccp"]
+[ext_resource type="Texture2D" uid="uid://c1pr5vo5uhxnt" path="res://Craftland/Terrain/CL_Crops_Mining.png" id="2_m2tan"]
+[ext_resource type="Texture2D" uid="uid://dputkwfd8bkyj" path="res://Craftland/Houses/CLT_Buildings.png" id="3_lg4cd"]
+[ext_resource type="Texture2D" uid="uid://c45f5t08bg1ae" path="res://Craftland/Houses/CLT_Houses.png" id="4_lg4cd"]
+[ext_resource type="Texture2D" uid="uid://gi8885e665u4" path="res://Craftland/Craftland Town/32x32/CLT_Terrain.png" id="5_toc20"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r4ay5"]
+texture = ExtResource("1_7uccp")
+26:58/size_in_atlas = Vector2i(10, 14)
+26:58/0 = 0
+36:86/size_in_atlas = Vector2i(4, 4)
+36:86/0 = 0
+54:83/size_in_atlas = Vector2i(10, 12)
+54:83/0 = 0
+54:83/0/texture_origin = Vector2i(0, 40)
+54:83/0/physics_layer_0/polygon_0/points = PackedVector2Array(-33.5, 31.5, -41.5, 18.5, -32, 7.5, -40, -17.5, 41, -18, 38.5, 13.5, 33.5, 28, 12, 34, -0.5, 40.5, -12.5, 31.5)
+40:81/size_in_atlas = Vector2i(14, 15)
+40:81/0 = 0
+40:81/0/texture_origin = Vector2i(0, 40)
+40:81/0/physics_layer_0/polygon_0/points = PackedVector2Array(-45, 55, -43.5, 32.5, -62.5, -7.5, 47, -8.5, 35, 29, 32, 52.5, 12.5, 54.5, -3.5, 65.5, -19.5, 56.5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_toc20"]
+texture = ExtResource("2_m2tan")
+28:26/size_in_atlas = Vector2i(6, 10)
+28:26/0 = 0
+28:26/0/texture_origin = Vector2i(0, 25)
+28:26/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 7.5, 28, 12, 37.5, 10, 46, -12.5, 46, -14, 32, -9, 32)
+10:28/size_in_atlas = Vector2i(6, 8)
+10:28/0 = 0
+10:28/0/texture_origin = Vector2i(0, 25)
+10:28/0/physics_layer_0/polygon_0/points = PackedVector2Array(-9, -9.5, 7.5, -9.5, 6.5, 10.5, 10, 10.5, 10, 18, 14.5, 19, 14.5, 25.5, 10.5, 25.5, 10.5, 31, -8.5, 31, -15, 27, -15.5, 15.5, -9, 13)
+22:26/size_in_atlas = Vector2i(6, 10)
+22:26/0 = 0
+22:26/0/texture_origin = Vector2i(0, 25)
+22:26/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 7.5, 28, 12, 37.5, 10, 46, -12.5, 46, -14, 32, -9, 32)
+16:38/size_in_atlas = Vector2i(6, 10)
+16:38/0 = 0
+16:38/0/texture_origin = Vector2i(0, 25)
+16:38/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8.5, 29.5, 16, 33, 15, 48.5, -14, 49, -17, 38, -11.5, 28.5)
+10:40/size_in_atlas = Vector2i(6, 8)
+10:40/0 = 0
+10:40/0/texture_origin = Vector2i(0, 25)
+10:40/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13, 18, -7.5, 13, -8, 10, -6.5, -8, 8, -8, 7, 13, 11.5, 16, 14, 30.5, -12.5, 31.5)
+22:44/size_in_atlas = Vector2i(2, 4)
+22:44/0 = 0
+22:44/0/texture_origin = Vector2i(0, 15)
+22:44/0/physics_layer_0/polygon_0/points = PackedVector2Array(-15.5, -7, -9.5, -9.5, -9, -20.5, 8, -21, 8, -8, 14, -8, 13.5, 10.5, -16, 11)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u0jv0"]
+texture = ExtResource("3_lg4cd")
+62:0/size_in_atlas = Vector2i(24, 33)
+62:0/0 = 0
+62:0/0/texture_origin = Vector2i(0, -60)
+62:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-182, -23, 187, -19.5, 183.5, 282, 128.5, 309.5, -127, 309.5, -183.5, 277)
+0:0/size_in_atlas = Vector2i(24, 23)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, -60)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-129.5, -23.5, 173.5, -20, 175, 194, 121, 216.5, 17.5, 211.5, -89, 207.5, -174, 163, -175, 16, -129.5, -7.5)
+0:56/size_in_atlas = Vector2i(26, 20)
+0:56/0 = 0
+0:56/0/texture_origin = Vector2i(0, -60)
+0:56/0/physics_layer_0/polygon_0/points = PackedVector2Array(191.5, -24.5, 189, 177.5, 121, 216.5, 17.5, 211.5, -152, 213.5, -157, 196, -199.5, 178.5, -202.5, -25.5)
+0:95/size_in_atlas = Vector2i(26, 27)
+0:95/0 = 0
+0:95/0/texture_origin = Vector2i(0, -60)
+0:95/0/physics_layer_0/polygon_0/points = PackedVector2Array(191.5, -24.5, 191.5, 224, 148, 241.5, 131.5, 240.5, 132.5, 261, 42.5, 258, 39.5, 241.5, 6, 241.5, -11.5, 229, -52.5, 226, -80.5, 258, -124, 257, -144, 240.5, -190.5, 221, -196.5, -25.5)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6cc5n"]
+texture = ExtResource("4_lg4cd")
+106:28/size_in_atlas = Vector2i(18, 19)
+106:28/0 = 0
+106:28/0/texture_origin = Vector2i(0, -60)
+106:28/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -1.5, 128, -1.5, 129.5, 119.5, 114, 112, 114, 195, 67, 195, -48.5, 193, -114, 194, -115, 117.5, -128, 121.5)
+86:22/size_in_atlas = Vector2i(20, 28)
+86:22/0 = 0
+86:22/0/texture_origin = Vector2i(0, -60)
+86:22/0/physics_layer_0/polygon_0/points = PackedVector2Array(-141.5, -15, 139, -14.5, 138.5, 132, 124, 135, 123.5, 203, 65, 200.5, 64.5, 251.5, -61.5, 254.5, -66, 199, -125, 204, -124, 122.5, -137.5, 132)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o0i2a"]
+texture = ExtResource("5_toc20")
+
+[sub_resource type="TileSet" id="TileSet_m2tan"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_r4ay5")
+sources/1 = SubResource("TileSetAtlasSource_toc20")
+sources/2 = SubResource("TileSetAtlasSource_u0jv0")
+sources/3 = SubResource("TileSetAtlasSource_6cc5n")
+sources/4 = SubResource("TileSetAtlasSource_o0i2a")
+
+[node name="object" type="TileMap" unique_id=1821924732]
+y_sort_enabled = true
+tile_set = SubResource("TileSet_m2tan")
+rendering_quadrant_size = 32
+format = 2
+layer_0/y_sort_enabled = true
