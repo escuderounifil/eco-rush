@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://d2chlw7ufnv8u" path="res://Sounds/AtaqueMetal.mp3" id="11_fbds2"]
 [ext_resource type="AudioStream" uid="uid://dj4m7tw8c528k" path="res://Sounds/AtaqueVidro.mp3" id="12_fekqp"]
 [ext_resource type="AudioStream" uid="uid://ccvmsgcyscwy4" path="res://Sounds/Vitoria.mp3" id="13_otr5b"]
+[ext_resource type="PackedScene" uid="uid://p2nl1b2viw13" path="res://tile_map.tscn" id="15_f4yyw"]
 
 [node name="EcoRush" type="Node2D" unique_id=2125932469]
 
@@ -74,3 +75,5 @@ pitch_scale = 0.9
 stream = ExtResource("13_otr5b")
 volume_db = -10.0
 pitch_scale = 1.1
+
+[node name="TileMap" parent="." unique_id=1821058449 instance=ExtResource("15_f4yyw")]
