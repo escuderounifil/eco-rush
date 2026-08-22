@@ -3,6 +3,20 @@ class_name EcoBattleManager
 
 ## Controla todos os encontros de lixo do mapa e o sistema de turnos.
 
+@onready var som_ataque: AudioStreamPlayer = $"../SomAtaque"
+
+@onready var som_eletronico: AudioStreamPlayer = $"../SomAtaqueEletronico"
+@onready var som_plastico: AudioStreamPlayer = $"../SomAtaquePlastico"
+@onready var som_metal: AudioStreamPlayer = $"../SomAtaqueMetal"
+@onready var som_organico: AudioStreamPlayer = $"../SomAtaqueOrganico"
+@onready var som_papel: AudioStreamPlayer = $"../SomAtaquePapel"
+@onready var som_vidro: AudioStreamPlayer = $"../SomAtaqueVidro"
+
+@onready var som_game_over: AudioStreamPlayer = $"../SomGameOver"
+@onready var som_vitoria: AudioStreamPlayer = $"../SomVitoria"
+
+@onready var musica: AudioStreamPlayer = $"../Musica"
+
 const BattlePointScript = preload("res://battle/battle_point.gd")
 
 const DISTANCIA_INTERACAO: float = 125.0
@@ -32,8 +46,7 @@ const CORES: Dictionary = {
 	"Vidro": Color("3e733d")
 }
 
-# Três batalhas de cada material. As posições foram distribuídas pelo mapa
-# atual e podem ser alteradas aqui sem mexer na lógica da batalha.
+# Três batalhas de cada material.
 const PONTOS_BATALHA: Array[Dictionary] = [
 	{"tipo": "Eletrônico", "nome": "Celular quebrado", "pos": Vector2(640, 96)},
 	{"tipo": "Eletrônico", "nome": "Teclado velho", "pos": Vector2(1056, 352)},
@@ -59,6 +72,7 @@ const PONTOS_BATALHA: Array[Dictionary] = [
 	{"tipo": "Vidro", "nome": "Pote de vidro", "pos": Vector2(96, 560)},
 	{"tipo": "Vidro", "nome": "Caco de vidro", "pos": Vector2(-96, 352)}
 ]
+
 var player: CharacterBody2D = null
 var _pontos: Array[Node2D] = []
 var _ponto_proximo: Node2D = null
@@ -88,6 +102,7 @@ func _ready() -> void:
 
 	if not HUD.tipo_lixo_selecionado.is_connected(_on_tipo_lixo_selecionado):
 		HUD.tipo_lixo_selecionado.connect(_on_tipo_lixo_selecionado)
+
 	if not HUD.reiniciar_solicitado.is_connected(_on_reiniciar_solicitado):
 		HUD.reiniciar_solicitado.connect(_on_reiniciar_solicitado)
 
@@ -117,10 +132,12 @@ func _input(event: InputEvent) -> void:
 		return
 
 	var tecla := event as InputEventKey
+
 	if not tecla.pressed or tecla.echo:
 		return
 
 	var codigo := tecla.physical_keycode
+
 	if codigo == KEY_NONE:
 		codigo = tecla.keycode
 
@@ -143,6 +160,7 @@ func _input(event: InputEvent) -> void:
 
 func _criar_pontos() -> void:
 	var numero_por_tipo: Dictionary = {}
+
 	for tipo in TIPOS:
 		numero_por_tipo[tipo] = 0
 
@@ -150,13 +168,28 @@ func _criar_pontos() -> void:
 		var tipo := str(dados.get("tipo", ""))
 		var nome_lixo := str(dados.get("nome", "Lixo"))
 		var posicao: Vector2 = dados.get("pos", Vector2.ZERO)
+
 		numero_por_tipo[tipo] = int(numero_por_tipo.get(tipo, 0)) + 1
 
 		var ponto: Node2D = BattlePointScript.new()
-		ponto.name = "Lixo_%s_%d" % [_nome_seguro(tipo), int(numero_por_tipo[tipo])]
+
+		ponto.name = "Lixo_%s_%d" % [
+			_nome_seguro(tipo),
+			int(numero_por_tipo[tipo])
+		]
+
 		ponto.position = posicao
+
 		add_child(ponto)
-		ponto.call("configurar", tipo, nome_lixo, int(numero_por_tipo[tipo]), COR_MARCADOR)
+
+		ponto.call(
+			"configurar",
+			tipo,
+			nome_lixo,
+			int(numero_por_tipo[tipo]),
+			COR_MARCADOR
+		)
+
 		_pontos.append(ponto)
 
 
@@ -168,7 +201,9 @@ func _atualizar_ponto_proximo() -> void:
 	for ponto in _pontos:
 		if not is_instance_valid(ponto) or bool(ponto.get("concluido")):
 			continue
+
 		var distancia := pos_player.distance_to(ponto.global_position)
+
 		if distancia <= DISTANCIA_INTERACAO and distancia < melhor_distancia:
 			melhor = ponto
 			melhor_distancia = distancia
@@ -178,13 +213,20 @@ func _atualizar_ponto_proximo() -> void:
 	for ponto in _pontos:
 		if not is_instance_valid(ponto):
 			continue
+
 		var eh_proximo := ponto == _ponto_proximo
 		var tipo := str(ponto.get("tipo_lixo"))
-		ponto.call("set_player_proximo", eh_proximo, HUD.tipo_esta_ativo(tipo))
+
+		ponto.call(
+			"set_player_proximo",
+			eh_proximo,
+			HUD.tipo_esta_ativo(tipo)
+		)
 
 
 func _esconder_labels_pontos() -> void:
 	_ponto_proximo = null
+
 	for ponto in _pontos:
 		if is_instance_valid(ponto):
 			ponto.call("set_player_proximo", false, false)
@@ -195,10 +237,15 @@ func _tentar_iniciar_batalha(ponto: Node2D) -> void:
 		return
 
 	var tipo := str(ponto.get("tipo_lixo"))
+
 	if not HUD.tipo_esta_ativo(tipo):
 		HUD.ativar_hud()
-		HUD.mudar_texto("Você ainda não tem o poder necessário para coletar este lixo.")
+		HUD.mudar_texto(
+			"Você ainda não tem o poder necessário para coletar este lixo."
+		)
+
 		HUD.mostrar_progresso_tipo(tipo)
+
 		_hud_aberta_por_ponto_bloqueado = true
 		return
 
@@ -210,56 +257,85 @@ func _iniciar_batalha(ponto: Node2D) -> void:
 		return
 
 	_batalha_ativa = true
+
+	# Para a música do mapa quando começa a batalha.
+	if is_instance_valid(musica):
+		musica.stop()
+
 	_derrota_ativa = false
 	_turno_jogador = true
 	_token_turno += 1
 	_ponto_atual = ponto
+
 	_vida_elias = VIDA_MAX_ELIAS
 	_vida_lixo = VIDA_MAX_LIXO
 	_hud_aberta_por_ponto_bloqueado = false
 
 	var tipo := str(ponto.get("tipo_lixo"))
 	var nome_lixo := str(ponto.get("nome_lixo"))
+
 	HUD.ativar_hud()
 	HUD.set_modo_batalha(true)
-	# As barras de vida agora ficam no mundo, embaixo do Elias e do lixo.
-	# O antigo painel superior da HUD permanece escondido.
+
 	HUD.esconder_batalha()
 	HUD.mostrar_progresso_tipo(tipo)
-	HUD.mudar_texto("BATALHA! Classifique '%s' clicando no material correto." % nome_lixo)
+
+	HUD.mudar_texto(
+		"BATALHA! Classifique '%s' clicando no material correto." % nome_lixo
+	)
 
 	player.set_movimento_bloqueado(true)
 	player.mostrar_barra_vida_batalha(_vida_elias)
+
 	ponto.call("mostrar_barra_vida", _vida_lixo)
-	var centro := (_posicao_visual_player() + ponto.global_position) * 0.5
+
+	var centro := (
+		_posicao_visual_player() +
+		ponto.global_position
+	) * 0.5
+
 	player.iniciar_foco_batalha(centro, ZOOM_BATALHA)
+
 	_esconder_labels_pontos()
 
 
 func _on_tipo_lixo_selecionado(tipo: String, _numero: int) -> void:
 	if not _batalha_ativa or _derrota_ativa or not _turno_jogador:
 		return
+
 	if not is_instance_valid(_ponto_atual):
 		return
 
 	_turno_jogador = false
 	_token_turno += 1
+
 	var meu_token := _token_turno
 	var correto := str(_ponto_atual.get("tipo_lixo"))
 
 	if tipo != correto:
-		HUD.mudar_texto("Tipo errado! O lixo prepara um ataque certeiro...")
+		HUD.mudar_texto(
+			"Tipo errado! O lixo prepara um ataque certeiro..."
+		)
+
 		_atacar_elias(true)
 		return
 
-	# O ataque do Elias leva 3 segundos para ser concluído. Durante esse tempo
-	# nenhum outro botão de ataque é aceito.
 	HUD.mudar_texto("Acertou! Elias prepara o ataque...")
+
 	await get_tree().create_timer(TEMPO_ENTRE_ATAQUES).timeout
-	if meu_token != _token_turno or not _batalha_ativa or not is_instance_valid(_ponto_atual):
+
+	if meu_token != _token_turno:
+		return
+
+	if not _batalha_ativa or not is_instance_valid(_ponto_atual):
 		return
 
 	_vida_lixo = maxi(0, _vida_lixo - DANO_ELIAS)
+
+	# Som do ataque do Elias.
+	if is_instance_valid(som_ataque):
+		som_ataque.play()
+
 	_ponto_atual.call("atualizar_barra_vida", _vida_lixo)
 	_ponto_atual.call("animar_dano")
 
@@ -268,7 +344,10 @@ func _on_tipo_lixo_selecionado(tipo: String, _numero: int) -> void:
 		_vencer_batalha()
 		return
 
-	HUD.mudar_texto("Ataque concluído. Agora o lixo prepara o contra-ataque...")
+	HUD.mudar_texto(
+		"Ataque concluído. Agora o lixo prepara o contra-ataque..."
+	)
+
 	_atacar_elias(false)
 
 
@@ -277,10 +356,18 @@ func _atacar_elias(ataque_letal: bool) -> void:
 		return
 
 	var meu_token := _token_turno
-	# O ataque do lixo também leva pelo menos 3 segundos antes de causar dano.
+
+	# O ataque do lixo leva 2 segundos antes de causar dano.
 	await get_tree().create_timer(TEMPO_ENTRE_ATAQUES).timeout
-	if meu_token != _token_turno or not _batalha_ativa:
+
+	if meu_token != _token_turno:
 		return
+
+	if not _batalha_ativa:
+		return
+
+	# Som diferente de acordo com o tipo de lixo.
+	_tocar_som_ataque_lixo()
 
 	if ataque_letal:
 		_vida_elias = 0
@@ -291,39 +378,103 @@ func _atacar_elias(ataque_letal: bool) -> void:
 		player.atualizar_barra_vida_batalha(_vida_elias)
 
 	if _vida_elias <= 0:
-		HUD.mudar_texto("O lixo acertou Elias. Você perdeu a batalha.")
+		HUD.mudar_texto(
+			"O lixo acertou Elias. Você perdeu a batalha."
+		)
+
 		await get_tree().create_timer(0.8).timeout
+
 		if _batalha_ativa:
 			_perder_batalha()
+
 		return
 
 	_turno_jogador = true
-	HUD.mudar_texto("SEU TURNO! Clique no material correto para atacar.")
+
+	HUD.mudar_texto(
+		"SEU TURNO! Clique no material correto para atacar."
+	)
+
+
+func _tocar_som_ataque_lixo() -> void:
+	if not is_instance_valid(_ponto_atual):
+		return
+
+	var tipo := str(_ponto_atual.get("tipo_lixo"))
+
+	match tipo:
+		"Eletrônico":
+			if is_instance_valid(som_eletronico):
+				som_eletronico.play()
+
+		"Plástico":
+			if is_instance_valid(som_plastico):
+				som_plastico.play()
+
+		"Metal":
+			if is_instance_valid(som_metal):
+				som_metal.play()
+
+		"Orgânico":
+			if is_instance_valid(som_organico):
+				som_organico.play()
+
+		"Papel":
+			if is_instance_valid(som_papel):
+				som_papel.play()
+
+		"Vidro":
+			if is_instance_valid(som_vidro):
+				som_vidro.play()
 
 
 func _vencer_batalha() -> void:
 	if not _batalha_ativa or not is_instance_valid(_ponto_atual):
 		return
 
+	# Som de vitória.
+	if is_instance_valid(som_vitoria):
+		som_vitoria.play()
+
 	_token_turno += 1
 	_turno_jogador = false
+
 	var tipo := str(_ponto_atual.get("tipo_lixo"))
+
 	_ponto_atual.call("marcar_concluido")
 
-	var quantidade := clampi(int(_coletas.get(tipo, 0)) + 1, 0, 3)
+	var quantidade := clampi(
+		int(_coletas.get(tipo, 0)) + 1,
+		0,
+		3
+	)
+
 	_coletas[tipo] = quantidade
+
 	var percentual := _percentual_por_quantidade(quantidade)
+
 	HUD.definir_progresso_tipo(tipo, percentual)
 	HUD.mostrar_progresso_tipo(tipo)
+
 	if percentual >= 100:
 		if tipo == TIPOS[TIPOS.size() - 1]:
-			HUD.mudar_texto("%s concluído: 100%%! Volte ao Velho para entregar a última coleta." % tipo)
+			HUD.mudar_texto(
+				"%s concluído: 100%%! Volte ao Velho para entregar a última coleta."
+				% tipo
+			)
 		else:
-			HUD.mudar_texto("%s concluído: 100%%! Volte ao Velho para entregar e liberar o próximo poder." % tipo)
+			HUD.mudar_texto(
+				"%s concluído: 100%%! Volte ao Velho para entregar e liberar o próximo poder."
+				% tipo
+			)
 	else:
-		HUD.mudar_texto("%s coletado: %d%%. Restam %d batalhas desse material." % [tipo, percentual, 3 - quantidade])
+		HUD.mudar_texto(
+			"%s coletado: %d%%. Restam %d batalhas desse material."
+			% [tipo, percentual, 3 - quantidade]
+		)
 
 	await get_tree().create_timer(1.1).timeout
+
 	_encerrar_batalha_vitoriosa()
 
 
@@ -334,6 +485,7 @@ func _encerrar_batalha_vitoriosa() -> void:
 	_batalha_ativa = false
 	_turno_jogador = false
 	_ponto_atual = null
+
 	HUD.esconder_batalha()
 	HUD.set_modo_batalha(false)
 	HUD.desativar_hud()
@@ -342,6 +494,10 @@ func _encerrar_batalha_vitoriosa() -> void:
 		player.esconder_barra_vida_batalha()
 		player.encerrar_foco_batalha()
 		player.set_movimento_bloqueado(false)
+
+	# Volta a música do mapa depois da vitória.
+	if is_instance_valid(musica):
+		musica.play()
 
 
 func _perder_batalha() -> void:
@@ -352,11 +508,17 @@ func _perder_batalha() -> void:
 	_batalha_ativa = false
 	_derrota_ativa = true
 	_turno_jogador = false
+
 	if is_instance_valid(_ponto_atual):
 		_ponto_atual.call("esconder_barra_vida")
+
 	if is_instance_valid(player):
 		player.esconder_barra_vida_batalha()
 		player.set_movimento_bloqueado(true)
+
+	# Som de Game Over.
+	if is_instance_valid(som_game_over):
+		som_game_over.play()
 
 	HUD.mostrar_tela_derrota()
 
@@ -369,6 +531,7 @@ func _on_reiniciar_solicitado() -> void:
 	_batalha_ativa = false
 	_turno_jogador = false
 	_ponto_atual = null
+
 	HUD.resetar_estado_novo_jogo()
 	get_tree().reload_current_scene()
 
@@ -377,10 +540,13 @@ func _percentual_por_quantidade(quantidade: int) -> int:
 	match clampi(quantidade, 0, 3):
 		0:
 			return 0
+
 		1:
 			return 33
+
 		2:
 			return 66
+
 		_:
 			return 100
 
@@ -390,20 +556,25 @@ func obter_coletas(tipo: String) -> int:
 
 
 func obter_percentual(tipo: String) -> int:
-	return _percentual_por_quantidade(obter_coletas(tipo))
+	return _percentual_por_quantidade(
+		obter_coletas(tipo)
+	)
 
 
 func _buscar_player() -> void:
 	var cena := get_tree().current_scene
+
 	if cena == null:
 		return
 
 	var candidato := cena.get_node_or_null("Player")
+
 	if candidato is CharacterBody2D:
 		player = candidato as CharacterBody2D
 		return
 
 	var encontrado := cena.find_child("Player", true, false)
+
 	if encontrado is CharacterBody2D:
 		player = encontrado as CharacterBody2D
 
@@ -411,16 +582,23 @@ func _buscar_player() -> void:
 func _posicao_visual_player() -> Vector2:
 	if not is_instance_valid(player):
 		return Vector2.ZERO
-	var sprite: Node2D = player.get_node_or_null("AnimatedSprite2D") as Node2D
+
+	var sprite: Node2D = player.get_node_or_null(
+		"AnimatedSprite2D"
+	) as Node2D
+
 	if sprite != null:
 		return sprite.global_position
+
 	return player.global_position
 
 
 func _nome_seguro(valor: String) -> String:
 	var nome := valor.to_lower()
+
 	nome = nome.replace("á", "a").replace("à", "a").replace("ã", "a").replace("â", "a")
 	nome = nome.replace("é", "e").replace("ê", "e").replace("í", "i")
 	nome = nome.replace("ó", "o").replace("ô", "o").replace("õ", "o")
 	nome = nome.replace("ú", "u").replace("ç", "c")
+
 	return nome.replace(" ", "_")
