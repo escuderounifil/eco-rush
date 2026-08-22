@@ -24,8 +24,8 @@ Cada fala usa:
 
 ```gdscript
 {
-    "falante": "VELHO",
-    "texto": "Texto aqui."
+	"falante": "VELHO",
+	"texto": "Texto aqui."
 }
 ```
 
@@ -33,9 +33,9 @@ Para disparar o desbloqueio do eletrônico após uma fala:
 
 ```gdscript
 {
-    "falante": "VELHO",
-    "texto": "Vou liberar o poder de coleta de lixo eletrônico.",
-    "evento": "desbloquear_eletronico"
+	"falante": "VELHO",
+	"texto": "Vou liberar o poder de coleta de lixo eletrônico.",
+	"evento": "desbloquear_eletronico"
 }
 ```
 
