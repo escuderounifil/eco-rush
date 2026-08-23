@@ -48,29 +48,75 @@ const CORES: Dictionary = {
 
 # Três batalhas de cada material.
 const PONTOS_BATALHA: Array[Dictionary] = [
-	{"tipo": "Eletrônico", "nome": "Celular quebrado", "pos": Vector2(640, 96)},
-	{"tipo": "Eletrônico", "nome": "Teclado velho", "pos": Vector2(1056, 352)},
-	{"tipo": "Eletrônico", "nome": "Carregador queimado", "pos": Vector2(1504, 704)},
+	{"tipo": "Eletrônico",
+	 "nome": "Celular quebrado", 
+	 "pos": Vector2(640, 96), 
+	 "sprite":preload("res://Assets/monstros/celular-quebrado.png")
+	},
+	{"tipo": "Eletrônico",
+	 "nome": "Teclado velho",
+	 "pos": Vector2(1056, 352),
+	 "sprite":preload("res://Assets/monstros/teclado-antigo.png")
+	},
+	{"tipo": "Eletrônico",
+	 "nome": "Carregador queimado",
+	 "pos": Vector2(1504, 704),
+	"sprite": preload("res://Assets/monstros/carregador-queimado.png")
+	},
 
-	{"tipo": "Plástico", "nome": "Garrafa PET", "pos": Vector2(1792, 256)},
-	{"tipo": "Plástico", "nome": "Sacola plástica", "pos": Vector2(1696, 896)},
-	{"tipo": "Plástico", "nome": "Pote de plástico", "pos": Vector2(1200, 1072)},
+	{"tipo": "Plástico",
+	 "nome": "Garrafa PET",
+	 "pos": Vector2(1792, 256),
+	 "sprite": preload("res://Assets/monstros/garrafa.png")
+	},
+	{"tipo": "Plástico",
+	 "nome": "Sacola plástica",
+	 "pos": Vector2(1696, 896)
+	},
+	{"tipo": "Plástico",
+	 "nome": "Pote de plástico",
+	 "pos": Vector2(1200, 1072)
+	},
 
-	{"tipo": "Metal", "nome": "Lata de alumínio", "pos": Vector2(896, 816)},
-	{"tipo": "Metal", "nome": "Panela velha", "pos": Vector2(-48, 1104)},
-	{"tipo": "Metal", "nome": "Tampa metálica", "pos": Vector2(-304, 896)},
+	{"tipo": "Metal",
+	 "nome": "Lata de alumínio",
+	 "pos": Vector2(896, 816)},
+	{"tipo": "Metal",
+	 "nome": "Panela velha",
+	 "pos": Vector2(-48, 1104)},
+	{"tipo": "Metal",
+	 "nome": "Tampa metálica",
+	 "pos": Vector2(-304, 896)},
 
-	{"tipo": "Orgânico", "nome": "Casca de banana", "pos": Vector2(-496, 1200)},
-	{"tipo": "Orgânico", "nome": "Restos de comida", "pos": Vector2(-896, 1152)},
-	{"tipo": "Orgânico", "nome": "Folhas secas", "pos": Vector2(-1296, 1136)},
+	{"tipo": "Orgânico",
+	 "nome": "Casca de banana",
+	 "pos": Vector2(-496, 1200)},
+	{"tipo": "Orgânico",
+	 "nome": "Restos de comida",
+	 "pos": Vector2(-896, 1152)},
+	{"tipo": "Orgânico",
+	 "nome": "Folhas secas",
+	 "pos": Vector2(-1296, 1136)},
 
-	{"tipo": "Papel", "nome": "Jornal velho", "pos": Vector2(-1600, 896)},
-	{"tipo": "Papel", "nome": "Caixa de papelão", "pos": Vector2(-1792, 1200)},
-	{"tipo": "Papel", "nome": "Folha de caderno", "pos": Vector2(-1520, 784)},
+	{"tipo": "Papel",
+	 "nome": "Jornal velho",
+	 "pos": Vector2(-1600, 896)},
+	{"tipo": "Papel",
+	 "nome": "Caixa de papelão",
+	 "pos": Vector2(-1792, 1200)},
+	{"tipo": "Papel",
+	 "nome": "Folha de caderno",
+	 "pos": Vector2(-1520, 784)},
 
-	{"tipo": "Vidro", "nome": "Garrafa de vidro", "pos": Vector2(-304, 608)},
-	{"tipo": "Vidro", "nome": "Pote de vidro", "pos": Vector2(96, 560)},
-	{"tipo": "Vidro", "nome": "Caco de vidro", "pos": Vector2(-96, 352)}
+	{"tipo": "Vidro",
+	 "nome": "Garrafa de vidro",
+	 "pos": Vector2(-304, 608)},
+	{"tipo": "Vidro",
+	 "nome": "Pote de vidro",
+	 "pos": Vector2(96, 560)},
+	{"tipo": "Vidro",
+	 "nome": "Caco de vidro",
+	 "pos": Vector2(-96, 352)}
 ]
 
 var player: CharacterBody2D = null
@@ -169,6 +215,9 @@ func _criar_pontos() -> void:
 		var nome_lixo := str(dados.get("nome", "Lixo"))
 		var posicao: Vector2 = dados.get("pos", Vector2.ZERO)
 
+		# NOVO
+		var sprite_lixo: Texture2D = dados.get("sprite")
+
 		numero_por_tipo[tipo] = int(numero_por_tipo.get(tipo, 0)) + 1
 
 		var ponto: Node2D = BattlePointScript.new()
@@ -187,7 +236,8 @@ func _criar_pontos() -> void:
 			tipo,
 			nome_lixo,
 			int(numero_por_tipo[tipo]),
-			COR_MARCADOR
+			COR_MARCADOR,
+			sprite_lixo
 		)
 
 		_pontos.append(ponto)
@@ -241,7 +291,7 @@ func _tentar_iniciar_batalha(ponto: Node2D) -> void:
 	if not HUD.tipo_esta_ativo(tipo):
 		HUD.ativar_hud()
 		HUD.mudar_texto(
-			"Você ainda não tem o poder necessário para coletar este lixo."
+			"Você ainda não tem a lixeira necessária para coletar este lixo."
 		)
 
 		HUD.mostrar_progresso_tipo(tipo)
@@ -464,7 +514,7 @@ func _vencer_batalha() -> void:
 			)
 		else:
 			HUD.mudar_texto(
-				"%s concluído: 100%%! Volte ao Velho para entregar e liberar o próximo poder."
+				"%s concluído: 100%%! Volte ao Velho para entregar e liberar a próxima lixeira."
 				% tipo
 			)
 	else:

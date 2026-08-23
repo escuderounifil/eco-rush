@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dj4m7tw8c528k" path="res://Sounds/AtaqueVidro.mp3" id="12_fekqp"]
 [ext_resource type="AudioStream" uid="uid://ccvmsgcyscwy4" path="res://Sounds/Vitoria.mp3" id="13_otr5b"]
 [ext_resource type="PackedScene" uid="uid://p2nl1b2viw13" path="res://tile_map.tscn" id="15_f4yyw"]
+[ext_resource type="PackedScene" uid="uid://i8chx2bcawdd" path="res://DialogoVelho.tscn" id="16_fekqp"]
 
 [node name="EcoRush" type="Node2D" unique_id=2125932469]
 
@@ -77,3 +78,5 @@ volume_db = -10.0
 pitch_scale = 1.1
 
 [node name="TileMap" parent="." unique_id=1821058449 instance=ExtResource("15_f4yyw")]
+
+[node name="NPCVelho" parent="." unique_id=975491481 instance=ExtResource("16_fekqp")]

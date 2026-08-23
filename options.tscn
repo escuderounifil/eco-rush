@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://cnrky07jf6lvk"]
+
+[ext_resource type="Script" uid="uid://b0llpr6ihnfg4" path="res://options.gd" id="1_ao2gm"]
+[ext_resource type="Texture2D" uid="uid://c37o3uhkfkd6k" path="res://Assets/background.png" id="1_se8ut"]
+[ext_resource type="Texture2D" uid="uid://dku3hfwtkidds" path="res://Assets/Button/Options.png" id="2_ao2gm"]
+[ext_resource type="AudioStream" uid="uid://cles0l55r5oin" path="res://Sounds/Musica.mp3" id="2_w5qgn"]
+[ext_resource type="Texture2D" uid="uid://cgjdflv51efx1" path="res://Assets/Button/Botão-start.png" id="4_kls10"]
+[ext_resource type="Texture2D" uid="uid://dbvgvrchhrmrl" path="res://Assets/Button/botão-start-pressed.png" id="5_0kfld"]
+[ext_resource type="Texture2D" uid="uid://bqi118verbvnr" path="res://Assets/Button/start-start-hover.png" id="6_w5qgn"]
+[ext_resource type="PackedScene" uid="uid://cvrj3c33dhjrl" path="res://fade_transition.tscn" id="7_0kfld"]
+
+[node name="Options" type="Control" unique_id=907408753]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ao2gm")
+
+[node name="Musica" type="AudioStreamPlayer" parent="." unique_id=622138998]
+stream = ExtResource("2_w5qgn")
+volume_db = -25.544
+autoplay = true
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1837488075]
+position = Vector2(579, 337)
+texture = ExtResource("1_se8ut")
+
+[node name="Options" type="Sprite2D" parent="." unique_id=1510057959]
+position = Vector2(565, 325)
+scale = Vector2(0.427256, 0.427256)
+texture = ExtResource("2_ao2gm")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=109768787]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 440.99997
+offset_top = 432.0
+offset_right = 1721.0
+offset_bottom = 859.0
+scale = Vector2(0.195, 0.195)
+texture_normal = ExtResource("4_kls10")
+texture_pressed = ExtResource("5_0kfld")
+texture_hover = ExtResource("6_w5qgn")
+
+[node name="ColorRect" parent="." unique_id=91006557 instance=ExtResource("7_0kfld")]
+visible = false
+layout_mode = 0
+
+[node name="Fade_timer" type="Timer" parent="ColorRect" unique_id=846125412]
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="timeout" from="ColorRect/Fade_timer" to="." method="_on_timer_timeout"]

@@ -13,7 +13,7 @@
 [sub_resource type="GDScript" id="GDScript_2ot7e"]
 script/source = "extends Node2D
 
-@onready var musica: AudioStreamPlayer = $\"../Musica\"
+@onready var musica: AudioStreamPlayer = $Musica
 
 var button_type = null
 
@@ -25,12 +25,16 @@ func _on_start_pressed() -> void:
 
 
 func _on_options_pressed() -> void:
-	pass # Replace with function body.
-
+	button_type = \"options\"
+	$ColorRect.show()
+	$ColorRect/Fade_timer.start()
+	$ColorRect/AnimationPlayer.play(\"fade_in\")
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == \"start\" :
 		get_tree().change_scene_to_file(\"res://eco_rush.tscn\")
+	else:
+		get_tree().change_scene_to_file(\"res://options.tscn\")
 "
 
 [node name="MenuMain" type="Node2D" unique_id=698338427]
@@ -50,7 +54,8 @@ offset_right = 217.0
 offset_bottom = 176.0
 
 [node name="Background" type="Sprite2D" parent="ButtonManager" unique_id=1781242036]
-position = Vector2(409, 144)
+position = Vector2(435, 243)
+scale = Vector2(1.6199753, 1.6737515)
 texture = ExtResource("1_u2d4o")
 
 [node name="Start" type="TextureButton" parent="ButtonManager" unique_id=739357453]
@@ -87,6 +92,10 @@ texture_hover = ExtResource("6_pqpoy")
 
 [node name="ColorRect" parent="." unique_id=91006557 instance=ExtResource("8_pqpoy")]
 visible = false
+offset_left = -769.03467
+offset_top = -423.0
+offset_right = 2111.6519
+offset_bottom = 1206.0
 
 [node name="Fade_timer" type="Timer" parent="ColorRect" unique_id=1913619681]
 
