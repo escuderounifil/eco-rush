@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3jxyldk3jsoa"
-path="res://.godot/imported/bota-idle.png-38cee01326046ff3ea8d7e19c7910a1a.ctex"
+uid="uid://tbxw0ama6hsy"
+path="res://.godot/imported/lata.png-02f75662081e85c7870ce7810a96f6bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/bota-idle.png"
-dest_files=["res://.godot/imported/bota-idle.png-38cee01326046ff3ea8d7e19c7910a1a.ctex"]
+source_file="res://Assets/monstros/lata.png"
+dest_files=["res://.godot/imported/lata.png-02f75662081e85c7870ce7810a96f6bd.ctex"]
 
 [params]
 

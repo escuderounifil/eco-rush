@@ -71,22 +71,30 @@ const PONTOS_BATALHA: Array[Dictionary] = [
 	},
 	{"tipo": "Plástico",
 	 "nome": "Sacola plástica",
-	 "pos": Vector2(1696, 896)
+	 "pos": Vector2(1696, 896),
+	 "sprite": preload("res://Assets/monstros/sacola.png")
 	},
 	{"tipo": "Plástico",
 	 "nome": "Pote de plástico",
-	 "pos": Vector2(1200, 1072)
+	 "pos": Vector2(1200, 1072),
+	 "sprite": preload("res://Assets/monstros/pote.png")
 	},
 
 	{"tipo": "Metal",
 	 "nome": "Lata de alumínio",
-	 "pos": Vector2(896, 816)},
+	 "pos": Vector2(896, 816),
+	 "sprite": preload("res://Assets/monstros/lata.png")
+	},
 	{"tipo": "Metal",
 	 "nome": "Panela velha",
-	 "pos": Vector2(-48, 1104)},
+	 "pos": Vector2(-48, 1104),
+	 "sprite": preload("res://Assets/monstros/panela-velha.png")
+	},
 	{"tipo": "Metal",
-	 "nome": "Tampa metálica",
-	 "pos": Vector2(-304, 896)},
+	 "nome": "Tampa de lixo",
+	 "pos": Vector2(-304, 896),
+	 "sprite": preload("res://Assets/monstros/tampa-lixo.png")
+	},
 
 	{"tipo": "Orgânico",
 	 "nome": "Casca de banana",
