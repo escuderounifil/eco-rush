@@ -8,16 +8,19 @@
 [ext_resource type="Texture2D" uid="uid://bvab285fn4ck7" path="res://Assets/Button/botão-options-pressed.png" id="5_u2d4o"]
 [ext_resource type="Texture2D" uid="uid://b2w36bjg07efh" path="res://Assets/Button/botão-options-hover.png" id="6_pqpoy"]
 [ext_resource type="PackedScene" uid="uid://cvrj3c33dhjrl" path="res://fade_transition.tscn" id="8_pqpoy"]
-[ext_resource type="AudioStream" uid="uid://cles0l55r5oin" path="res://Sounds/Musica.mp3" id="9_2i4oj"]
+[ext_resource type="AudioStream" uid="uid://7cn5jjiq2434" path="res://Sounds/Click Menu.mp3" id="9_2i4oj"]
 
 [sub_resource type="GDScript" id="GDScript_2ot7e"]
 script/source = "extends Node2D
 
-@onready var musica: AudioStreamPlayer = $\"../Musica\"
+@onready var som_click: AudioStreamPlayer = $SomClick
 
 var button_type = null
 
+
 func _on_start_pressed() -> void:
+	som_click.play()
+
 	button_type = \"start\"
 	$ColorRect.show()
 	$ColorRect/Fade_timer.start()
@@ -25,21 +28,16 @@ func _on_start_pressed() -> void:
 
 
 func _on_options_pressed() -> void:
-	pass # Replace with function body.
+	som_click.play()
 
 
 func _on_fade_timer_timeout() -> void:
-	if button_type == \"start\" :
+	if button_type == \"start\":
 		get_tree().change_scene_to_file(\"res://eco_rush.tscn\")
 "
 
 [node name="MenuMain" type="Node2D" unique_id=698338427]
 script = SubResource("GDScript_2ot7e")
-
-[node name="Musica" type="AudioStreamPlayer" parent="." unique_id=2035176]
-stream = ExtResource("9_2i4oj")
-volume_db = -25.0
-autoplay = true
 
 [node name="ButtonManager" type="Control" parent="." unique_id=1844660718]
 layout_mode = 3
@@ -89,6 +87,11 @@ texture_hover = ExtResource("6_pqpoy")
 visible = false
 
 [node name="Fade_timer" type="Timer" parent="ColorRect" unique_id=1913619681]
+
+[node name="SomClick" type="AudioStreamPlayer" parent="." unique_id=1628482138]
+stream = ExtResource("9_2i4oj")
+volume_db = 10.0
+pitch_scale = 3.8
 
 [connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonManager/Options" to="." method="_on_options_pressed"]
