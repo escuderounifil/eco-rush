@@ -98,33 +98,43 @@ const PONTOS_BATALHA: Array[Dictionary] = [
 
 	{"tipo": "Orgânico",
 	 "nome": "Casca de banana",
-	 "pos": Vector2(-496, 1200)},
+	 "pos": Vector2(-496, 1200),
+	"sprite": preload("res://Assets/monstros/casca-de-banana.png")
+	},
 	{"tipo": "Orgânico",
 	 "nome": "Restos de comida",
-	 "pos": Vector2(-896, 1152)},
+	 "pos": Vector2(-896, 1152),
+	"sprite": preload("res://Assets/monstros/restos-comida.png")},
 	{"tipo": "Orgânico",
 	 "nome": "Folhas secas",
-	 "pos": Vector2(-1296, 1136)},
+	 "pos": Vector2(-1296, 1136),
+	"sprite": preload("res://Assets/monstros/folhas-secas.png")},
 
 	{"tipo": "Papel",
 	 "nome": "Jornal velho",
-	 "pos": Vector2(-1600, 896)},
+	 "pos": Vector2(-1600, 896),
+	"sprite": preload("res://Assets/monstros/jornal velho.png")},
 	{"tipo": "Papel",
 	 "nome": "Caixa de papelão",
-	 "pos": Vector2(-1792, 1200)},
+	 "pos": Vector2(-1792, 1200),
+	"sprite": preload("res://Assets/monstros/caixa-papelao.png")},
 	{"tipo": "Papel",
 	 "nome": "Folha de caderno",
-	 "pos": Vector2(-1520, 784)},
+	 "pos": Vector2(-1520, 784),
+	"sprite": preload("res://Assets/monstros/folha-caderno.png")},
 
 	{"tipo": "Vidro",
 	 "nome": "Garrafa de vidro",
-	 "pos": Vector2(-304, 608)},
+	 "pos": Vector2(-304, 608),
+	"sprite": preload("res://Assets/monstros/garrafa-vidro.png")},
 	{"tipo": "Vidro",
 	 "nome": "Pote de vidro",
-	 "pos": Vector2(96, 560)},
+	 "pos": Vector2(96, 560),
+	"sprite": preload("res://Assets/monstros/pote-vidro.png")},
 	{"tipo": "Vidro",
 	 "nome": "Caco de vidro",
-	 "pos": Vector2(-96, 352)}
+	 "pos": Vector2(-23, 408),
+	"sprite": preload("res://Assets/monstros/caco-vidro.png")}
 ]
 
 var player: CharacterBody2D = null
