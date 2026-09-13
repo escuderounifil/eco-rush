@@ -13,9 +13,13 @@
 [ext_resource type="AudioStream" uid="uid://b38ybngn6rfbx" path="res://Sounds/AtaquePapel.mp3" id="11_f4yyw"]
 [ext_resource type="AudioStream" uid="uid://d2chlw7ufnv8u" path="res://Sounds/AtaqueMetal.mp3" id="11_fbds2"]
 [ext_resource type="AudioStream" uid="uid://dj4m7tw8c528k" path="res://Sounds/AtaqueVidro.mp3" id="12_fekqp"]
+[ext_resource type="AudioStream" uid="uid://bpgwb7hy0f1so" path="res://Sounds/SomSacola.mp3" id="13_ic0b6"]
 [ext_resource type="AudioStream" uid="uid://ccvmsgcyscwy4" path="res://Sounds/Vitoria.mp3" id="13_otr5b"]
+[ext_resource type="AudioStream" uid="uid://cetj5w3x3dt5q" path="res://Sounds/SomFolhas.mp3" id="15_5vw1r"]
 [ext_resource type="PackedScene" uid="uid://p2nl1b2viw13" path="res://tile_map.tscn" id="15_f4yyw"]
 [ext_resource type="PackedScene" uid="uid://i8chx2bcawdd" path="res://DialogoVelho.tscn" id="16_fekqp"]
+[ext_resource type="AudioStream" uid="uid://p3j6qv4ajjj7" path="res://Sounds/SomPapelao.mp3" id="17_0wxe4"]
+[ext_resource type="AudioStream" uid="uid://luynpmbtjjkp" path="res://Sounds/EcoRush_Musica_Batalha.wav" id="19_5vw1r"]
 
 [node name="EcoRush" type="Node2D" unique_id=2125932469]
 
@@ -31,52 +35,73 @@ position = Vector2(5328, 706)
 position = Vector2(5460, 216)
 script = ExtResource("6_battle")
 
-[node name="Musica" type="AudioStreamPlayer" parent="." unique_id=939675722]
-stream = ExtResource("7_tjq57")
-volume_db = -25.0
-autoplay = true
+[node name="TileMap" parent="." unique_id=1821058449 instance=ExtResource("15_f4yyw")]
 
-[node name="SomAtaque" type="AudioStreamPlayer" parent="." unique_id=1147213536]
-stream = ExtResource("8_85v23")
-volume_db = -15.0
-pitch_scale = 1.34
+[node name="NPCVelho" parent="." unique_id=975491481 instance=ExtResource("16_fekqp")]
 
-[node name="SomAtaqueEletronico" type="AudioStreamPlayer" parent="." unique_id=460523768]
-stream = ExtResource("9_yi2co")
-volume_db = -15.0
+[node name="AudioManager" type="Node" parent="." unique_id=37831845]
 
-[node name="SomAtaquePlastico" type="AudioStreamPlayer" parent="." unique_id=1876288722]
-stream = ExtResource("10_gi1jd")
-volume_db = -10.0
-pitch_scale = 1.1
-
-[node name="SomAtaqueMetal" type="AudioStreamPlayer" parent="." unique_id=1524040539]
-stream = ExtResource("11_fbds2")
-volume_db = -10.0
-
-[node name="SomAtaqueOrganico" type="AudioStreamPlayer" parent="." unique_id=1090677692]
-stream = ExtResource("10_otr5b")
-volume_db = -15.0
-
-[node name="SomAtaquePapel" type="AudioStreamPlayer" parent="." unique_id=932626213]
-stream = ExtResource("11_f4yyw")
-volume_db = -15.0
-
-[node name="SomAtaqueVidro" type="AudioStreamPlayer" parent="." unique_id=1258201201]
-stream = ExtResource("12_fekqp")
-volume_db = -10.0
-pitch_scale = 0.9
-
-[node name="SomGameOver" type="AudioStreamPlayer" parent="." unique_id=653793794]
+[node name="SomGameOver" type="AudioStreamPlayer" parent="AudioManager" unique_id=653793794]
 stream = ExtResource("10_3bq6o")
 volume_db = -10.0
 pitch_scale = 0.9
 
-[node name="SomVitoria" type="AudioStreamPlayer" parent="." unique_id=1030341268]
+[node name="SomVitoria" type="AudioStreamPlayer" parent="AudioManager" unique_id=1030341268]
 stream = ExtResource("13_otr5b")
 volume_db = -10.0
 pitch_scale = 1.1
 
-[node name="TileMap" parent="." unique_id=1821058449 instance=ExtResource("15_f4yyw")]
+[node name="SomAtaqueVidro" type="AudioStreamPlayer" parent="AudioManager" unique_id=1258201201]
+stream = ExtResource("12_fekqp")
+volume_db = -10.0
+pitch_scale = 0.9
 
-[node name="NPCVelho" parent="." unique_id=975491481 instance=ExtResource("16_fekqp")]
+[node name="SomAtaque" type="AudioStreamPlayer" parent="AudioManager" unique_id=1147213536]
+stream = ExtResource("8_85v23")
+volume_db = -15.0
+pitch_scale = 1.34
+
+[node name="Musica" type="AudioStreamPlayer" parent="AudioManager" unique_id=939675722]
+stream = ExtResource("7_tjq57")
+volume_db = -25.0
+autoplay = true
+
+[node name="SomAtaqueEletronico" type="AudioStreamPlayer" parent="AudioManager" unique_id=460523768]
+stream = ExtResource("9_yi2co")
+volume_db = -15.0
+
+[node name="SomSacola" type="AudioStreamPlayer" parent="AudioManager" unique_id=578732282]
+stream = ExtResource("13_ic0b6")
+volume_db = -10.0
+pitch_scale = 1.35
+
+[node name="SomAtaquePlastico" type="AudioStreamPlayer" parent="AudioManager" unique_id=1876288722]
+stream = ExtResource("10_gi1jd")
+volume_db = -10.0
+pitch_scale = 1.1
+
+[node name="SomFolhas" type="AudioStreamPlayer" parent="AudioManager" unique_id=1279162643]
+stream = ExtResource("15_5vw1r")
+volume_db = -15.0
+pitch_scale = 0.91
+
+[node name="SomAtaqueMetal" type="AudioStreamPlayer" parent="AudioManager" unique_id=1524040539]
+stream = ExtResource("11_fbds2")
+volume_db = -10.0
+
+[node name="SomPapelao" type="AudioStreamPlayer" parent="AudioManager" unique_id=2047828637]
+stream = ExtResource("17_0wxe4")
+volume_db = -10.0
+pitch_scale = 1.01
+
+[node name="SomAtaqueOrganico" type="AudioStreamPlayer" parent="AudioManager" unique_id=1090677692]
+stream = ExtResource("10_otr5b")
+volume_db = -15.0
+
+[node name="MusicaBatalha" type="AudioStreamPlayer" parent="AudioManager" unique_id=730290269]
+stream = ExtResource("19_5vw1r")
+volume_db = -25.0
+
+[node name="SomAtaquePapel" type="AudioStreamPlayer" parent="AudioManager" unique_id=932626213]
+stream = ExtResource("11_f4yyw")
+volume_db = -15.0

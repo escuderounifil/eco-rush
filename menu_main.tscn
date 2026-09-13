@@ -15,7 +15,6 @@
 script/source = "extends Node2D
 
 @onready var som_click: AudioStreamPlayer = $SomClick
-@onready var musica: AudioStreamPlayer = $Musica
 
 var button_type = null
 
@@ -109,7 +108,6 @@ pitch_scale = 3.8
 [node name="Musica" type="AudioStreamPlayer" parent="." unique_id=1967857024]
 stream = ExtResource("10_fk81q")
 volume_db = -25.0
-autoplay = true
 
 [connection signal="pressed" from="ButtonManager/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonManager/Options" to="." method="_on_options_pressed"]
